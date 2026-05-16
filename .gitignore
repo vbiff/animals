@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Test coverage
+coverage
+
+# MCP / AI tooling config (contains secrets)
+.mcp.json
+
+# Supabase local dev
+.supabase
