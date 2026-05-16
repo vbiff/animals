@@ -7,7 +7,9 @@
 
 ## Overview
 
-A web application for pet owners in Portugal to maintain a digital veterinary card for their animals. Both owners and veterinarians can view and update the card. Vets access it via a time-limited QR code — no registration required.
+A **mobile-first** web application for pet owners in Portugal to maintain a digital veterinary card for their animals. Both owners and veterinarians can view and update the card. Vets access it via a time-limited QR code — no registration required.
+
+All layouts, touch targets, and interactions must be designed for mobile screens first (320px+). Desktop is an enhancement, not the primary target.
 
 ---
 
@@ -15,7 +17,7 @@ A web application for pet owners in Portugal to maintain a digital veterinary ca
 
 | Layer | Technology |
 |---|---|
-| Frontend | React + Vite + TypeScript |
+| Frontend | React + Vite + TypeScript (mobile-first) |
 | Backend / DB | Supabase (PostgreSQL + Auth + Storage + Edge Functions) |
 | Auth | Google OAuth via Supabase |
 | i18n | i18next — Portuguese, English, Russian |
