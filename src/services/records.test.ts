@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { getRecords, addVaccine, addSymptom, addMedication, addDocument, deleteRecord } from './records'
+import { getRecords, addVaccine } from './records'
 
 vi.mock('./supabase', () => ({
   supabase: { auth: { getSession: vi.fn() }, from: vi.fn() },

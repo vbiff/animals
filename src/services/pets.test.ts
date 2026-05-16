@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { getPets, createPet, getPet, updatePet } from './pets'
+import { getPets, createPet } from './pets'
 
 vi.mock('./supabase', () => ({
   supabase: {
