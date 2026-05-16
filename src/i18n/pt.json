@@ -1,0 +1,12 @@
+{
+  "auth": { "sign_in_with_google": "Entrar com Google", "welcome": "Cartão Veterinário", "tagline": "Registos veterinários digitais para os seus animais" },
+  "dashboard": { "my_pets": "Os Meus Animais", "add_pet": "Adicionar Animal", "no_pets": "Ainda não tem animais. Adicione o primeiro!" },
+  "pet": { "name": "Nome", "species": "Espécie", "breed": "Raça", "birth_date": "Data de Nascimento", "photo": "Foto", "vaccines": "Vacinas", "symptoms": "Sintomas", "medications": "Medicamentos", "documents": "Documentos", "open_for_vet": "Abrir para Veterinário", "invite_co_owner": "Convidar Co-proprietário", "edit": "Editar" },
+  "vaccine": { "name": "Nome da vacina", "date": "Data de administração", "next_date": "Próxima dose (opcional)", "document": "Certificado (opcional)", "add": "Adicionar vacina" },
+  "symptom": { "title": "Título", "date": "Data", "description": "Descrição", "add": "Adicionar sintoma" },
+  "medication": { "name": "Nome do medicamento", "dosage": "Dosagem", "frequency": "Frequência", "start_date": "Data de início", "end_date": "Data de fim (opcional)", "add": "Adicionar medicamento" },
+  "document": { "name": "Nome do documento", "type": "Tipo", "file": "Ficheiro", "add": "Carregar documento", "types": { "analysis": "Análise laboratorial", "xray": "Raio-X", "prescription": "Receita", "other": "Outro" } },
+  "vet": { "enter_name": "O seu nome", "enter_license": "Número de licença NMV", "identify": "Entrar como veterinário", "add_record": "Adicionar registo de visita", "session_expired": "Este código QR expirou. Peça ao proprietário que gere um novo.", "session_invalid": "Ligação inválida." },
+  "invite": { "copy_link": "Copiar link de convite", "copied": "Copiado!", "accept": "Aceitar convite", "invalid": "Este link de convite é inválido ou expirou.", "success": "Agora é co-proprietário deste animal." },
+  "common": { "save": "Guardar", "cancel": "Cancelar", "close": "Fechar", "loading": "A carregar...", "error": "Ocorreu um erro. Por favor, tente novamente.", "added_by_owner": "Adicionado pelo proprietário", "added_by_vet": "Adicionado pelo Dr. {{name}} (NMV: {{license}})", "delete": "Eliminar" }
+}

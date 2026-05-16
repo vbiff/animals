@@ -1,0 +1,12 @@
+{
+  "auth": { "sign_in_with_google": "Sign in with Google", "welcome": "Vet Card", "tagline": "Digital veterinary records for your pets" },
+  "dashboard": { "my_pets": "My Pets", "add_pet": "Add Pet", "no_pets": "No pets yet. Add your first one!" },
+  "pet": { "name": "Name", "species": "Species", "breed": "Breed", "birth_date": "Date of Birth", "photo": "Photo", "vaccines": "Vaccines", "symptoms": "Symptoms", "medications": "Medications", "documents": "Documents", "open_for_vet": "Open for Vet", "invite_co_owner": "Invite Co-owner", "edit": "Edit" },
+  "vaccine": { "name": "Vaccine name", "date": "Date administered", "next_date": "Next dose (optional)", "document": "Certificate (optional)", "add": "Add vaccine" },
+  "symptom": { "title": "Title", "date": "Date", "description": "Description", "add": "Add symptom" },
+  "medication": { "name": "Medication name", "dosage": "Dosage", "frequency": "Frequency", "start_date": "Start date", "end_date": "End date (optional)", "add": "Add medication" },
+  "document": { "name": "Document name", "type": "Type", "file": "File", "add": "Upload document", "types": { "analysis": "Lab analysis", "xray": "X-ray", "prescription": "Prescription", "other": "Other" } },
+  "vet": { "enter_name": "Your name", "enter_license": "NMV license number", "identify": "Enter as vet", "add_record": "Add visit record", "session_expired": "This QR code has expired. Ask the owner to generate a new one.", "session_invalid": "Invalid link." },
+  "invite": { "copy_link": "Copy invite link", "copied": "Copied!", "accept": "Accept invitation", "invalid": "This invite link is invalid or has expired.", "success": "You are now a co-owner of this pet." },
+  "common": { "save": "Save", "cancel": "Cancel", "close": "Close", "loading": "Loading...", "error": "An error occurred. Please try again.", "added_by_owner": "Added by owner", "added_by_vet": "Added by Dr. {{name}} (NMV: {{license}})", "delete": "Delete" }
+}
