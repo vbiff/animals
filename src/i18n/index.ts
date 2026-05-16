@@ -1,6 +1,9 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import type { Language } from '../types'
+import en from './en.json'
+import pt from './pt.json'
+import ru from './ru.json'
 
 const STORAGE_KEY = 'vet-card-lang'
 
@@ -17,27 +20,16 @@ i18n.use(initReactI18next).init({
   lng: detectLanguage(),
   fallbackLng: 'en',
   interpolation: { escapeValue: false },
-  resources: {},
+  resources: {
+    en: { translation: en },
+    pt: { translation: pt },
+    ru: { translation: ru },
+  },
 })
 
-const bundles: Record<Language, () => Promise<{ default: object }>> = {
-  en: () => import('./en.json'),
-  pt: () => import('./pt.json'),
-  ru: () => import('./ru.json'),
-}
-
-async function loadLanguage(lang: Language): Promise<void> {
-  if (i18n.hasResourceBundle(lang, 'translation')) return
-  const { default: bundle } = await bundles[lang]()
-  i18n.addResourceBundle(lang, 'translation', bundle)
-}
-
 export async function changeLanguage(lang: Language): Promise<void> {
-  await loadLanguage(lang)
   await i18n.changeLanguage(lang)
   localStorage.setItem(STORAGE_KEY, lang)
 }
-
-loadLanguage(detectLanguage())
 
 export default i18n
