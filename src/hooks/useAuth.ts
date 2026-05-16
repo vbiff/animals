@@ -14,7 +14,11 @@ export function useAuth() {
       if (event === 'SIGNED_OUT') {
         setUser(null)
       } else {
-        setUser(await getCurrentUser())
+        try {
+          setUser(await getCurrentUser())
+        } catch {
+          setUser(null)
+        }
       }
     })
 
