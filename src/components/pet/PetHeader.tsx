@@ -12,6 +12,7 @@ export function PetHeader({ pet, onOpenForVet, onInvite }: Props) {
         ? <img className="pet-portrait" src={pet.photo_url} alt={pet.name} />
         : <div className="pet-portrait-placeholder" aria-hidden="true" />}
       <div className="pet-title">
+        <Link className="back-link" to="/dashboard">{t('common.back')}</Link>
         <p className="eyebrow">Health profile</p>
         <h1>{pet.name}</h1>
         <p className="muted">{pet.species} · {pet.breed}</p>

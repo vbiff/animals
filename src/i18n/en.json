@@ -8,5 +8,5 @@
   "document": { "name": "Document name", "type": "Type", "file": "File", "add": "Upload document", "types": { "analysis": "Lab analysis", "xray": "X-ray", "prescription": "Prescription", "other": "Other" } },
   "vet": { "enter_name": "Your name", "enter_license": "NMV license number", "identify": "Enter as vet", "add_record": "Add visit record", "session_expired": "This QR code has expired. Ask the owner to generate a new one.", "session_invalid": "Invalid link." },
   "invite": { "copy_link": "Copy invite link", "copied": "Copied!", "accept": "Accept invitation", "invalid": "This invite link is invalid or has expired.", "success": "You are now a co-owner of this pet." },
-  "common": { "save": "Save", "cancel": "Cancel", "close": "Close", "loading": "Loading...", "error": "An error occurred. Please try again.", "added_by_owner": "Added by owner", "added_by_vet": "Added by Dr. {{name}} (NMV: {{license}})", "delete": "Delete" }
+  "common": { "save": "Save", "cancel": "Cancel", "close": "Close", "back": "Back", "loading": "Loading...", "error": "An error occurred. Please try again.", "added_by_owner": "Added by owner", "added_by_vet": "Added by Dr. {{name}} (NMV: {{license}})", "delete": "Delete" }
 }

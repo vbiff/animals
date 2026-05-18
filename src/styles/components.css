@@ -144,6 +144,30 @@
   color: var(--color-ink-muted);
 }
 
+.back-link {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  color: var(--color-ink-muted);
+  font-size: var(--text-size-xs);
+  letter-spacing: var(--text-tracking-wide);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.back-link::before {
+  content: "";
+  width: 34px;
+  height: 1px;
+  background: currentColor;
+}
+
+.back-link:hover {
+  color: var(--color-ink);
+}
+
 .pet-header {
   display: grid;
   grid-template-columns: minmax(140px, 240px) 1fr auto;

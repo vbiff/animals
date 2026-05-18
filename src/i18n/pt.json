@@ -8,5 +8,5 @@
   "document": { "name": "Nome do documento", "type": "Tipo", "file": "Ficheiro", "add": "Carregar documento", "types": { "analysis": "Análise laboratorial", "xray": "Raio-X", "prescription": "Receita", "other": "Outro" } },
   "vet": { "enter_name": "O seu nome", "enter_license": "Número de licença NMV", "identify": "Entrar como veterinário", "add_record": "Adicionar registo de visita", "session_expired": "Este código QR expirou. Peça ao proprietário que gere um novo.", "session_invalid": "Ligação inválida." },
   "invite": { "copy_link": "Copiar link de convite", "copied": "Copiado!", "accept": "Aceitar convite", "invalid": "Este link de convite é inválido ou expirou.", "success": "Agora é co-proprietário deste animal." },
-  "common": { "save": "Guardar", "cancel": "Cancelar", "close": "Fechar", "loading": "A carregar...", "error": "Ocorreu um erro. Por favor, tente novamente.", "added_by_owner": "Adicionado pelo proprietário", "added_by_vet": "Adicionado pelo Dr. {{name}} (NMV: {{license}})", "delete": "Eliminar" }
+  "common": { "save": "Guardar", "cancel": "Cancelar", "close": "Fechar", "back": "Voltar", "loading": "A carregar...", "error": "Ocorreu um erro. Por favor, tente novamente.", "added_by_owner": "Adicionado pelo proprietário", "added_by_vet": "Adicionado pelo Dr. {{name}} (NMV: {{license}})", "delete": "Eliminar" }
 }
