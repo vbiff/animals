@@ -56,31 +56,36 @@ export function VetPage() {
     if (!data.error) setSession(data.session)
   }
 
-  if (status === 'loading') return <div>{t('common.loading')}</div>
-  if (status === 'invalid') return <div style={{ textAlign: 'center', padding: 40 }}><p>{t('vet.session_invalid')}</p></div>
+  if (status === 'loading') return <div className="loading-state">{t('common.loading')}</div>
+  if (status === 'invalid') return <div className="screen-center"><div className="modal-panel modal-panel--center"><p>{t('vet.session_invalid')}</p></div></div>
   if (status === 'identify') return <VetEntryForm onIdentify={handleIdentify} />
 
   const pet = session!.pets
 
   return (
-    <div style={{ padding: 24 }}>
-      <h1>{pet.name}</h1>
-      <p>{pet.species} · {pet.breed}</p>
-      <p>Dr. {session!.vet_name} (NMV: {session!.vet_license})</p>
+    <div className="page-pad">
+      <div className="topbar">
+        <div>
+          <p className="eyebrow">Vet session</p>
+          <h1>{pet.name}</h1>
+          <p className="muted">{pet.species} · {pet.breed}</p>
+          <p className="record-meta">Dr. {session!.vet_name} (NMV: {session!.vet_license})</p>
+        </div>
+      </div>
 
-      <hr />
+      <hr className="section-divider" />
       <h2>{t('vet.add_record')}</h2>
       <VetAddRecordForm onAdd={handleAddRecord} />
 
-      <hr />
+      <hr className="section-divider" />
       <h2>{t('pet.vaccines')}</h2>
-      <ul>{session!.vaccines.map(v => <li key={v.id}>{v.name} — {v.date}</li>)}</ul>
+      <ul className="record-list">{session!.vaccines.map(v => <li className="record-item" key={v.id}><span>{v.name}</span><span className="record-meta">{v.date}</span></li>)}</ul>
 
       <h2>{t('pet.symptoms')}</h2>
-      <ul>{session!.symptoms.map(s => <li key={s.id}>{s.title} — {s.date}</li>)}</ul>
+      <ul className="record-list">{session!.symptoms.map(s => <li className="record-item" key={s.id}><span>{s.title}</span><span className="record-meta">{s.date}</span></li>)}</ul>
 
       <h2>{t('pet.medications')}</h2>
-      <ul>{session!.medications.map(m => <li key={m.id}>{m.name} {m.dosage}</li>)}</ul>
+      <ul className="record-list">{session!.medications.map(m => <li className="record-item" key={m.id}><span>{m.name}</span><span className="record-meta">{m.dosage}</span></li>)}</ul>
     </div>
   )
 }

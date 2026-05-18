@@ -31,10 +31,10 @@ export function DocumentsTab({ petId, documents, onRefresh }: Props) {
   }
 
   return (
-    <div>
+    <div className="record-panel">
       <button onClick={() => setShowForm(!showForm)}>{t('document.add')}</button>
       {showForm && (
-        <form onSubmit={handleAdd} style={{ display: 'flex', flexDirection: 'column', gap: 8, margin: '12px 0' }}>
+        <form onSubmit={handleAdd} className="record-form">
           <input placeholder={t('document.name')} value={name} onChange={e => setName(e.target.value)} required />
           <select value={type} onChange={e => setType(e.target.value as DocumentType)}>
             {(['analysis', 'xray', 'prescription', 'other'] as DocumentType[]).map(dt => (
@@ -42,16 +42,18 @@ export function DocumentsTab({ petId, documents, onRefresh }: Props) {
             ))}
           </select>
           <input type="file" onChange={e => setFile(e.target.files?.[0] ?? null)} required />
-          {error && <p style={{ color: 'red' }}>{error}</p>}
+          {error && <p className="error-text">{error}</p>}
           <button type="submit" disabled={uploading}>{uploading ? t('common.loading') : t('common.save')}</button>
         </form>
       )}
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+      <ul className="record-list">
         {documents.map(d => (
-          <li key={d.id} style={{ borderBottom: '1px solid #eee', padding: '8px 0' }}>
-            <a href={d.file_url} target="_blank" rel="noopener noreferrer"><strong>{d.name}</strong></a>
-            <span> · {t(`document.types.${d.type}`)}</span>
-            <button onClick={() => deleteRecord('documents', d.id).then(onRefresh)}>{t('common.delete')}</button>
+          <li key={d.id} className="record-item">
+            <div>
+              <a href={d.file_url} target="_blank" rel="noopener noreferrer"><strong>{d.name}</strong></a>
+              <p className="record-meta">{t(`document.types.${d.type}`)}</p>
+            </div>
+            <button className="button-secondary" onClick={() => deleteRecord('documents', d.id).then(onRefresh)}>{t('common.delete')}</button>
           </li>
         ))}
       </ul>

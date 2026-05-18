@@ -10,22 +10,25 @@ export function DashboardPage() {
   const { pets, loading, error, refresh } = usePets()
   const [showAdd, setShowAdd] = useState(false)
 
-  if (loading) return <div>{t('common.loading')}</div>
-  if (error) return <div>{error}</div>
+  if (loading) return <div className="loading-state">{t('common.loading')}</div>
+  if (error) return <div className="loading-state error-text">{error}</div>
 
   return (
-    <div style={{ padding: 24 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1>{t('dashboard.my_pets')}</h1>
-        <div style={{ display: 'flex', gap: 8 }}>
+    <div className="page-pad">
+      <div className="topbar">
+        <div>
+          <p className="eyebrow">Private profiles</p>
+          <h1>{t('dashboard.my_pets')}</h1>
+        </div>
+        <div className="action-row">
           <button onClick={() => setShowAdd(true)}>{t('dashboard.add_pet')}</button>
-          <button onClick={() => signOut().catch(console.error)}>{t('auth.sign_out')}</button>
+          <button className="button-secondary" onClick={() => signOut().catch(console.error)}>{t('auth.sign_out')}</button>
         </div>
       </div>
 
       {pets.length === 0
-        ? <p>{t('dashboard.no_pets')}</p>
-        : <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 16, marginTop: 16 }}>
+        ? <p className="lead empty-state">{t('dashboard.no_pets')}</p>
+        : <div className="pet-grid">
             {pets.map(pet => <PetCard key={pet.id} pet={pet} />)}
           </div>
       }

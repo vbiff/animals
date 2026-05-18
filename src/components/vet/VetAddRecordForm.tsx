@@ -24,7 +24,7 @@ export function VetAddRecordForm({ onAdd }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 480 }}>
+    <form onSubmit={handleSubmit} className="record-form">
       <select value={type} onChange={e => { setType(e.target.value as RecordType); setFields({}) }}>
         <option value="vaccine">{t('vaccine.add')}</option>
         <option value="symptom">{t('symptom.add')}</option>

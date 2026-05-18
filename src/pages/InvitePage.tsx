@@ -21,25 +21,29 @@ export function InvitePage() {
       .catch(e => { setErrorMsg(e.message); setStatus('error') })
   }, [user, loading, token, navigate])
 
-  if (loading) return <div>{t('common.loading')}</div>
+  if (loading) return <div className="loading-state">{t('common.loading')}</div>
 
   if (!user) {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', gap: 16 }}>
-        <p>{t('invite.accept')}</p>
+      <div className="screen-center">
+        <div className="modal-panel modal-panel--center">
+          <p>{t('invite.accept')}</p>
         <button onClick={() => signInWithGoogle().catch(console.error)}>{t('auth.sign_in_with_google')}</button>
+        </div>
       </div>
     )
   }
 
   if (status === 'error') {
     return (
-      <div style={{ textAlign: 'center', padding: 40 }}>
+      <div className="screen-center">
+        <div className="modal-panel modal-panel--center">
         <p>{errorMsg || t('invite.invalid')}</p>
         <button onClick={() => navigate('/dashboard')}>{t('dashboard.my_pets')}</button>
+        </div>
       </div>
     )
   }
 
-  return <div>{t('common.loading')}</div>
+  return <div className="loading-state">{t('common.loading')}</div>
 }

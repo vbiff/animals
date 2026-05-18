@@ -1,0 +1,18 @@
+:root {
+  --bg-app: var(--color-paper);
+  --bg-surface: var(--color-paper-raised);
+  --bg-surface-muted: var(--color-paper-warm);
+  --bg-hero:
+    linear-gradient(180deg, rgba(251, 250, 247, 0.16), rgba(251, 250, 247, 0.92)),
+    url('/src/assets/hero.png');
+  --shadow-subtle: 0 18px 50px rgba(31, 28, 24, 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-hero:
+      linear-gradient(180deg, rgba(22, 21, 20, 0.24), rgba(22, 21, 20, 0.94)),
+      url('/src/assets/hero.png');
+    --shadow-subtle: 0 18px 50px rgba(0, 0, 0, 0.28);
+  }
+}

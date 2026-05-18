@@ -1,0 +1,117 @@
+@import './colors.css';
+@import './backgrounds.css';
+@import './typography.css';
+
+:root {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: var(--text-leading-body);
+  color: var(--color-ink);
+  background: var(--bg-app);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100svh;
+  margin: 0;
+  background: var(--bg-app);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+.button-link {
+  min-height: 42px;
+  border: 1px solid var(--color-ink);
+  border-radius: 0;
+  padding: 0 16px;
+  background: var(--color-ink);
+  color: var(--color-accent-contrast);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: var(--text-tracking-wide);
+  font-size: var(--text-size-xs);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+button:hover,
+.button-link:hover {
+  background: transparent;
+  color: var(--color-ink);
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+.button-secondary {
+  background: transparent;
+  color: var(--color-ink);
+}
+
+.button-secondary:hover {
+  background: var(--color-ink);
+  color: var(--color-accent-contrast);
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--color-line-strong);
+  border-radius: 0;
+  padding: 12px 0;
+  background: transparent;
+  color: var(--color-ink);
+  outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus-visible,
+a:focus-visible {
+  outline: 1px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+a {
+  color: inherit;
+}
+
+#root {
+  min-height: 100svh;
+}

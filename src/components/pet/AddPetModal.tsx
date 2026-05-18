@@ -31,17 +31,17 @@ export function AddPetModal({ onClose, onCreated }: Props) {
   }
 
   return (
-    <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ background: 'white', borderRadius: 8, padding: 24, width: 400 }}>
+    <div className="modal-backdrop">
+      <div className="modal-panel">
         <h2>{t('dashboard.add_pet')}</h2>
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <form onSubmit={handleSubmit} className="form-stack">
           <input placeholder={t('pet.name')} value={name} onChange={e => setName(e.target.value)} required />
           <input placeholder={t('pet.species')} value={species} onChange={e => setSpecies(e.target.value)} required />
           <input placeholder={t('pet.breed')} value={breed} onChange={e => setBreed(e.target.value)} />
           <input type="date" placeholder={t('pet.birth_date')} value={birthDate} onChange={e => setBirthDate(e.target.value)} required />
-          {error && <p style={{ color: 'red' }}>{error}</p>}
-          <div style={{ display: 'flex', gap: 8 }}>
-            <button type="button" onClick={onClose}>{t('common.cancel')}</button>
+          {error && <p className="error-text">{error}</p>}
+          <div className="action-row">
+            <button className="button-secondary" type="button" onClick={onClose}>{t('common.cancel')}</button>
             <button type="submit" disabled={submitting}>{t('common.save')}</button>
           </div>
         </form>

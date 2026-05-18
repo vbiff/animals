@@ -20,10 +20,10 @@ export function MedicationsTab({ petId, medications, onRefresh }: Props) {
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => setForm(f => ({ ...f, [k]: e.target.value }))
 
   return (
-    <div>
+    <div className="record-panel">
       <button onClick={() => setShowForm(!showForm)}>{t('medication.add')}</button>
       {showForm && (
-        <form onSubmit={handleAdd} style={{ display: 'flex', flexDirection: 'column', gap: 8, margin: '12px 0' }}>
+        <form onSubmit={handleAdd} className="record-form">
           <input placeholder={t('medication.name')} value={form.name} onChange={set('name')} required />
           <input placeholder={t('medication.dosage')} value={form.dosage} onChange={set('dosage')} required />
           <input placeholder={t('medication.frequency')} value={form.frequency} onChange={set('frequency')} required />
@@ -32,12 +32,15 @@ export function MedicationsTab({ petId, medications, onRefresh }: Props) {
           <button type="submit">{t('common.save')}</button>
         </form>
       )}
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+      <ul className="record-list">
         {medications.map(m => (
-          <li key={m.id} style={{ borderBottom: '1px solid #eee', padding: '8px 0' }}>
-            <strong>{m.name}</strong> {m.dosage} · {m.frequency}
-            <br /><small>{m.start_date}{m.end_date ? ` → ${m.end_date}` : ''}</small>
-            <button onClick={() => deleteRecord('medications', m.id).then(onRefresh)}>{t('common.delete')}</button>
+          <li key={m.id} className="record-item">
+            <div>
+              <strong>{m.name}</strong>
+              <p>{m.dosage} · {m.frequency}</p>
+              <small className="record-meta">{m.start_date}{m.end_date ? ` - ${m.end_date}` : ''}</small>
+            </div>
+            <button className="button-secondary" onClick={() => deleteRecord('medications', m.id).then(onRefresh)}>{t('common.delete')}</button>
           </li>
         ))}
       </ul>

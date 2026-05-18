@@ -20,22 +20,25 @@ export function SymptomsTab({ petId, symptoms, onRefresh }: Props) {
   }
 
   return (
-    <div>
+    <div className="record-panel">
       <button onClick={() => setShowForm(!showForm)}>{t('symptom.add')}</button>
       {showForm && (
-        <form onSubmit={handleAdd} style={{ display: 'flex', flexDirection: 'column', gap: 8, margin: '12px 0' }}>
+        <form onSubmit={handleAdd} className="record-form">
           <input placeholder={t('symptom.title')} value={title} onChange={e => setTitle(e.target.value)} required />
           <input type="date" value={date} onChange={e => setDate(e.target.value)} required />
           <textarea placeholder={t('symptom.description')} value={description} onChange={e => setDescription(e.target.value)} rows={3} />
           <button type="submit">{t('common.save')}</button>
         </form>
       )}
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+      <ul className="record-list">
         {symptoms.map(s => (
-          <li key={s.id} style={{ borderBottom: '1px solid #eee', padding: '8px 0' }}>
-            <strong>{s.title}</strong> — {s.date}
-            {s.description && <p style={{ margin: '4px 0' }}>{s.description}</p>}
-            <button onClick={() => deleteRecord('symptoms', s.id).then(onRefresh)}>{t('common.delete')}</button>
+          <li key={s.id} className="record-item">
+            <div>
+              <strong>{s.title}</strong>
+              <p className="record-meta">{s.date}</p>
+              {s.description && <p>{s.description}</p>}
+            </div>
+            <button className="button-secondary" onClick={() => deleteRecord('symptoms', s.id).then(onRefresh)}>{t('common.delete')}</button>
           </li>
         ))}
       </ul>

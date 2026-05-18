@@ -22,7 +22,7 @@ export function PetPage() {
   const [showVetModal, setShowVetModal] = useState(false)
   const [showInviteModal, setShowInviteModal] = useState(false)
 
-  if (loading) return <div>{t('common.loading')}</div>
+  if (loading) return <div className="loading-state">{t('common.loading')}</div>
   if (error || !pet) { navigate('/dashboard'); return null }
 
   const tabs: TabId[] = ['vaccines', 'symptoms', 'medications', 'documents']
@@ -30,14 +30,14 @@ export function PetPage() {
   return (
     <div>
       <PetHeader pet={pet} onOpenForVet={() => setShowVetModal(true)} onInvite={() => setShowInviteModal(true)} />
-      <div style={{ display: 'flex', borderBottom: '2px solid #eee', padding: '0 24px' }}>
+      <div className="tabs">
         {tabs.map(tabId => (
-          <button key={tabId} onClick={() => setTab(tabId)} style={{ padding: '8px 16px', borderBottom: tab === tabId ? '2px solid blue' : 'none', background: 'none', border: 'none', cursor: 'pointer' }}>
+          <button key={tabId} className={`tab-button${tab === tabId ? ' is-active' : ''}`} onClick={() => setTab(tabId)}>
             {tabId}
           </button>
         ))}
       </div>
-      <div style={{ padding: 24 }}>
+      <div className="page-pad">
         {tab === 'vaccines' && <VaccinesTab petId={id!} vaccines={records.vaccines} onRefresh={refresh} />}
         {tab === 'symptoms' && <SymptomsTab petId={id!} symptoms={records.symptoms} onRefresh={refresh} />}
         {tab === 'medications' && <MedicationsTab petId={id!} medications={records.medications} onRefresh={refresh} />}

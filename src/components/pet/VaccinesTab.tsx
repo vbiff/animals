@@ -20,24 +20,25 @@ export function VaccinesTab({ petId, vaccines, onRefresh }: Props) {
   }
 
   return (
-    <div>
+    <div className="record-panel">
       <button onClick={() => setShowForm(!showForm)}>{t('vaccine.add')}</button>
       {showForm && (
-        <form onSubmit={handleAdd} style={{ display: 'flex', flexDirection: 'column', gap: 8, margin: '12px 0' }}>
+        <form onSubmit={handleAdd} className="record-form">
           <input placeholder={t('vaccine.name')} value={name} onChange={e => setName(e.target.value)} required />
           <input type="date" placeholder={t('vaccine.date')} value={date} onChange={e => setDate(e.target.value)} required />
           <input type="date" placeholder={t('vaccine.next_date')} value={nextDate} onChange={e => setNextDate(e.target.value)} />
           <button type="submit">{t('common.save')}</button>
         </form>
       )}
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+      <ul className="record-list">
         {vaccines.map(v => (
-          <li key={v.id} style={{ borderBottom: '1px solid #eee', padding: '8px 0' }}>
-            <strong>{v.name}</strong> — {v.date}
-            {v.next_date && <span> (next: {v.next_date})</span>}
-            <br />
-            <small>{v.added_by.type === 'owner' ? t('common.added_by_owner') : t('common.added_by_vet', { name: v.added_by.name, license: (v.added_by as { vet_license: string }).vet_license })}</small>
-            <button onClick={() => deleteRecord('vaccines', v.id).then(onRefresh)} style={{ marginLeft: 8 }}>{t('common.delete')}</button>
+          <li key={v.id} className="record-item">
+            <div>
+              <strong>{v.name}</strong>
+              <p className="record-meta">{v.date}{v.next_date ? ` / next: ${v.next_date}` : ''}</p>
+              <small className="record-meta">{v.added_by.type === 'owner' ? t('common.added_by_owner') : t('common.added_by_vet', { name: v.added_by.name, license: (v.added_by as { vet_license: string }).vet_license })}</small>
+            </div>
+            <button className="button-secondary" onClick={() => deleteRecord('vaccines', v.id).then(onRefresh)}>{t('common.delete')}</button>
           </li>
         ))}
       </ul>

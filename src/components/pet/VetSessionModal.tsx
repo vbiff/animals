@@ -32,7 +32,7 @@ export function VetSessionModal({ petId, onClose }: VetSessionModalProps) {
     <ModalWrapper onClose={onClose}>
       <h2>{t('pet.open_for_vet')}</h2>
       <QRCode value={url} size={200} />
-      <p style={{ wordBreak: 'break-all', fontSize: 12 }}>{url}</p>
+      <p className="record-meta url-text">{url}</p>
       <button onClick={() => navigator.clipboard.writeText(url)}>{t('invite.copy_link')}</button>
     </ModalWrapper>
   )
@@ -61,7 +61,7 @@ export function InviteModal({ petId, onClose }: InviteModalProps) {
       {!url
         ? <button onClick={generate}>{t('invite.copy_link')}</button>
         : <>
-            <input readOnly value={url} style={{ width: '100%' }} />
+            <input readOnly value={url} />
             <button onClick={copy}>{copied ? t('invite.copied') : t('invite.copy_link')}</button>
           </>
       }
@@ -71,10 +71,10 @@ export function InviteModal({ petId, onClose }: InviteModalProps) {
 
 function ModalWrapper({ children, onClose }: { children: React.ReactNode; onClose: () => void }) {
   return (
-    <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ background: 'white', borderRadius: 8, padding: 24, minWidth: 300, display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'center' }}>
+    <div className="modal-backdrop">
+      <div className="modal-panel modal-panel--center">
         {children}
-        <button onClick={onClose}>{'×'} Close</button>
+        <button className="button-secondary" onClick={onClose}>Close</button>
       </div>
     </div>
   )

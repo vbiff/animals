@@ -11,12 +11,12 @@ const LANGS: { code: Language; label: string }[] = [
 export function LanguageSwitcher() {
   const { i18n } = useTranslation()
   return (
-    <div style={{ display: 'flex', gap: 4 }}>
+    <div className="language-switcher">
       {LANGS.map(({ code, label }) => (
         <button
           key={code}
           onClick={() => changeLanguage(code)}
-          style={{ fontWeight: i18n.language === code ? 'bold' : 'normal', padding: '4px 8px' }}
+          className={i18n.language === code ? 'is-active' : undefined}
         >
           {label}
         </button>

@@ -36,19 +36,20 @@ export function PetEditPage() {
     }
   }
 
-  if (loading || !pet) return <div>{t('common.loading')}</div>
+  if (loading || !pet) return <div className="loading-state">{t('common.loading')}</div>
 
   return (
-    <div style={{ padding: 24, maxWidth: 480 }}>
+    <div className="page-pad form-page">
+      <p className="eyebrow">Profile settings</p>
       <h1>{t('pet.edit')}</h1>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      <form onSubmit={handleSubmit} className="form-stack">
         <input placeholder={t('pet.name')} value={name} onChange={e => setName(e.target.value)} required />
         <input placeholder={t('pet.species')} value={species} onChange={e => setSpecies(e.target.value)} required />
         <input placeholder={t('pet.breed')} value={breed} onChange={e => setBreed(e.target.value)} />
         <input type="date" value={birthDate} onChange={e => setBirthDate(e.target.value)} required />
         <input type="file" accept="image/*" onChange={e => setPhotoFile(e.target.files?.[0] ?? null)} />
-        <div style={{ display: 'flex', gap: 8 }}>
-          <button type="button" onClick={() => navigate(`/pet/${id}`)}>{t('common.cancel')}</button>
+        <div className="action-row">
+          <button className="button-secondary" type="button" onClick={() => navigate(`/pet/${id}`)}>{t('common.cancel')}</button>
           <button type="submit" disabled={saving}>{saving ? t('common.loading') : t('common.save')}</button>
         </div>
       </form>
