@@ -8,11 +8,8 @@ vi.mock('../services/supabase', () => ({
       getSession: vi.fn().mockResolvedValue({ data: { session: null }, error: null }),
       onAuthStateChange: vi.fn().mockReturnValue({ data: { subscription: { unsubscribe: vi.fn() } } }),
     },
-    from: vi.fn(),
   },
 }))
-
-vi.mock('../services/auth', () => ({ getCurrentUser: vi.fn().mockResolvedValue(null) }))
 
 describe('useAuth', () => {
   it('starts loading', () => {
@@ -20,7 +17,7 @@ describe('useAuth', () => {
     expect(result.current.loading).toBe(true)
   })
 
-  it('sets loading false after resolution', async () => {
+  it('sets loading false after getSession resolves', async () => {
     const { result } = renderHook(() => useAuth())
     await act(async () => { await Promise.resolve() })
     expect(result.current.loading).toBe(false)
