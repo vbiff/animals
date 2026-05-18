@@ -1,5 +1,5 @@
 {
-  "auth": { "sign_in_with_google": "Войти через Google", "welcome": "Vet Card", "tagline": "Цифровые ветеринарные карты для ваших питомцев" },
+  "auth": { "sign_in_with_google": "Войти через Google", "sign_out": "Выйти", "welcome": "Vet Card", "tagline": "Цифровые ветеринарные карты для ваших питомцев" },
   "dashboard": { "my_pets": "Мои питомцы", "add_pet": "Добавить питомца", "no_pets": "Питомцев пока нет. Добавьте первого!" },
   "pet": { "name": "Имя", "species": "Вид", "breed": "Порода", "birth_date": "Дата рождения", "photo": "Фото", "vaccines": "Прививки", "symptoms": "Симптомы", "medications": "Лекарства", "documents": "Документы", "open_for_vet": "Открыть для ветеринара", "invite_co_owner": "Пригласить совладельца", "edit": "Редактировать" },
   "vaccine": { "name": "Название прививки", "date": "Дата вакцинации", "next_date": "Следующая доза (необязательно)", "document": "Сертификат (необязательно)", "add": "Добавить прививку" },

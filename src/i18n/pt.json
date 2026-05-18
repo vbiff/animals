@@ -1,5 +1,5 @@
 {
-  "auth": { "sign_in_with_google": "Entrar com Google", "welcome": "Cartão Veterinário", "tagline": "Registos veterinários digitais para os seus animais" },
+  "auth": { "sign_in_with_google": "Entrar com Google", "sign_out": "Sair", "welcome": "Cartão Veterinário", "tagline": "Registos veterinários digitais para os seus animais" },
   "dashboard": { "my_pets": "Os Meus Animais", "add_pet": "Adicionar Animal", "no_pets": "Ainda não tem animais. Adicione o primeiro!" },
   "pet": { "name": "Nome", "species": "Espécie", "breed": "Raça", "birth_date": "Data de Nascimento", "photo": "Foto", "vaccines": "Vacinas", "symptoms": "Sintomas", "medications": "Medicamentos", "documents": "Documentos", "open_for_vet": "Abrir para Veterinário", "invite_co_owner": "Convidar Co-proprietário", "edit": "Editar" },
   "vaccine": { "name": "Nome da vacina", "date": "Data de administração", "next_date": "Próxima dose (opcional)", "document": "Certificado (opcional)", "add": "Adicionar vacina" },

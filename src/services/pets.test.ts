@@ -5,6 +5,7 @@ vi.mock('./supabase', () => ({
   supabase: {
     auth: { getSession: vi.fn() },
     from: vi.fn(),
+    rpc: vi.fn(),
   },
 }))
 
@@ -30,14 +31,18 @@ describe('getPets', () => {
 })
 
 describe('createPet', () => {
-  it('inserts pet and creates owner row', async () => {
+  it('creates pet through the database rpc', async () => {
     vi.mocked(supabase.auth.getSession).mockResolvedValue(mockSession as never)
-    const petChain = { insert: vi.fn().mockReturnThis(), select: vi.fn().mockReturnThis(), single: vi.fn().mockResolvedValue({ data: mockPet, error: null }) }
-    const ownerChain = { insert: vi.fn().mockResolvedValue({ data: null, error: null }) }
-    vi.mocked(supabase.from).mockReturnValueOnce(petChain as never).mockReturnValueOnce(ownerChain as never)
+    vi.mocked(supabase.rpc).mockResolvedValue({ data: mockPet, error: null } as never)
 
     const result = await createPet({ name: 'Rex', species: 'dog', breed: 'Lab', birth_date: '2020-01-01' })
     expect(result).toEqual(mockPet)
-    expect(ownerChain.insert).toHaveBeenCalledWith({ pet_id: 'p1', user_id: 'u1', invited_by: null })
+    expect(supabase.rpc).toHaveBeenCalledWith('create_pet', {
+      p_name: 'Rex',
+      p_species: 'dog',
+      p_breed: 'Lab',
+      p_birth_date: '2020-01-01',
+      p_photo_url: null,
+    })
   })
 })

@@ -1,5 +1,5 @@
 {
-  "auth": { "sign_in_with_google": "Sign in with Google", "welcome": "Vet Card", "tagline": "Digital veterinary records for your pets" },
+  "auth": { "sign_in_with_google": "Sign in with Google", "sign_out": "Sign out", "welcome": "Vet Card", "tagline": "Digital veterinary records for your pets" },
   "dashboard": { "my_pets": "My Pets", "add_pet": "Add Pet", "no_pets": "No pets yet. Add your first one!" },
   "pet": { "name": "Name", "species": "Species", "breed": "Breed", "birth_date": "Date of Birth", "photo": "Photo", "vaccines": "Vaccines", "symptoms": "Symptoms", "medications": "Medications", "documents": "Documents", "open_for_vet": "Open for Vet", "invite_co_owner": "Invite Co-owner", "edit": "Edit" },
   "vaccine": { "name": "Vaccine name", "date": "Date administered", "next_date": "Next dose (optional)", "document": "Certificate (optional)", "add": "Add vaccine" },

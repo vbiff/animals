@@ -25,11 +25,15 @@ export async function getPet(id: string): Promise<Pet> {
 }
 
 export async function createPet(input: Omit<Pet, 'id' | 'photo_url' | 'created_at'>): Promise<Pet> {
-  const session = await requireSession()
-  const { data: pet, error } = await supabase.from('pets').insert(input).select().single()
+  await requireSession()
+  const { data: pet, error } = await supabase.rpc('create_pet', {
+    p_name: input.name,
+    p_species: input.species,
+    p_breed: input.breed,
+    p_birth_date: input.birth_date,
+    p_photo_url: null,
+  })
   if (error) throw new Error(error.message)
-  const { error: ownerErr } = await supabase.from('pet_owners').insert({ pet_id: pet.id, user_id: session.user.id, invited_by: null })
-  if (ownerErr) throw new Error(ownerErr.message)
   return pet as Pet
 }
 
