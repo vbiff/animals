@@ -8,18 +8,18 @@ export function useAuth() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getCurrentUser().then((u) => { setUser(u); setLoading(false) })
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event) => {
-      if (event === 'SIGNED_OUT') {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      if (!session) {
         setUser(null)
-      } else {
-        try {
-          setUser(await getCurrentUser())
-        } catch {
-          setUser(null)
-        }
+        setLoading(false)
+        return
       }
+      try {
+        setUser(await getCurrentUser())
+      } catch {
+        setUser(null)
+      }
+      setLoading(false)
     })
 
     return () => subscription.unsubscribe()
