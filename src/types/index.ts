@@ -35,6 +35,7 @@ export interface Symptom {
   id: string
   pet_id: string
   date: string
+  end_date: string | null
   title: string
   description: string
   added_by: AddedBy
@@ -49,6 +50,20 @@ export interface Medication {
   frequency: string
   start_date: string
   end_date: string | null
+  symptom_id: string | null
+  photo_url: string | null
+  added_by: AddedBy
+  created_at: string
+}
+
+export interface TreatNote {
+  id: string
+  pet_id: string
+  name: string
+  photo_url: string | null
+  liked: boolean
+  where_bought: string | null
+  date: string
   added_by: AddedBy
   created_at: string
 }
