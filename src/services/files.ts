@@ -1,7 +1,8 @@
 import { supabase } from './supabase'
 
 export async function uploadFile(petId: string, folder: 'documents' | 'vaccines' | 'photos' | 'medications' | 'treats', file: File): Promise<string> {
-  const ext = file.name.split('.').pop()
+  const ext = file.name.includes('.') ? file.name.split('.').pop() : null
+  if (!ext) throw new Error('File must have an extension')
   const path = `${petId}/${folder}/${crypto.randomUUID()}.${ext}`
 
   const { error } = await supabase.storage.from('pet-files').upload(path, file)

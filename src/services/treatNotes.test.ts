@@ -64,6 +64,12 @@ describe('updateTreatNote', () => {
     expect(chain.update).toHaveBeenCalledWith({ liked: false })
     expect(chain.eq).toHaveBeenCalledWith('id', 'n-1')
   })
+
+  it('throws when supabase returns error', async () => {
+    const chain = { update: vi.fn().mockReturnThis(), eq: vi.fn().mockResolvedValue({ error: { message: 'update failed' } }) }
+    vi.mocked(supabase.from).mockReturnValue(chain as never)
+    await expect(updateTreatNote('n-1', { liked: false })).rejects.toThrow('update failed')
+  })
 })
 
 describe('deleteTreatNote', () => {
@@ -73,5 +79,11 @@ describe('deleteTreatNote', () => {
     await deleteTreatNote('n-1')
     expect(supabase.from).toHaveBeenCalledWith('treat_notes')
     expect(chain.eq).toHaveBeenCalledWith('id', 'n-1')
+  })
+
+  it('throws when supabase returns error', async () => {
+    const chain = { delete: vi.fn().mockReturnThis(), eq: vi.fn().mockResolvedValue({ error: { message: 'delete failed' } }) }
+    vi.mocked(supabase.from).mockReturnValue(chain as never)
+    await expect(deleteTreatNote('n-1')).rejects.toThrow('delete failed')
   })
 })
