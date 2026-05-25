@@ -17,6 +17,8 @@ export function TreatNotesTab({ petId, treatNotes, onRefresh }: Props) {
   const [showForm, setShowForm] = useState(false)
   const [form, setForm] = useState<{ name: string; liked: boolean; where_bought: string; date: string; photo_url: string }>(emptyForm)
   const [editingId, setEditingId] = useState<string | null>(null)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [photoFile, setPhotoFile] = useState<File | null>(null)
 
   function setStr(k: 'name' | 'where_bought' | 'date') {
@@ -36,29 +38,37 @@ export function TreatNotesTab({ petId, treatNotes, onRefresh }: Props) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    const photoUrl = photoFile
-      ? await uploadFile(petId, 'treats', photoFile)
-      : form.photo_url || null
-    const payload = {
-      name: form.name,
-      liked: form.liked,
-      where_bought: form.where_bought || null,
-      date: form.date,
-      photo_url: photoUrl,
+    setSubmitError(null)
+    setIsSubmitting(true)
+    try {
+      const photoUrl = photoFile
+        ? await uploadFile(petId, 'treats', photoFile)
+        : form.photo_url || null
+      const payload = {
+        name: form.name,
+        liked: form.liked,
+        where_bought: form.where_bought || null,
+        date: form.date,
+        photo_url: photoUrl,
+      }
+      if (editingId) {
+        await updateTreatNote(editingId, payload)
+      } else {
+        await addTreatNote(petId, payload)
+      }
+      setForm(emptyForm); setEditingId(null); setPhotoFile(null); setShowForm(false)
+      onRefresh()
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : 'Error')
+    } finally {
+      setIsSubmitting(false)
     }
-    if (editingId) {
-      await updateTreatNote(editingId, payload)
-    } else {
-      await addTreatNote(petId, payload)
-    }
-    setForm(emptyForm); setEditingId(null); setPhotoFile(null); setShowForm(false)
-    onRefresh()
   }
 
   return (
     <div className="record-panel">
       <button onClick={() => { if (editingId) { cancelEdit() } else { setShowForm(v => !v) } }}>
-        {t('treat.add')}
+        {editingId ? t('common.cancel') : t('treat.add')}
       </button>
       {showForm && (
         <form onSubmit={handleSubmit} className="record-form">
@@ -90,8 +100,9 @@ export function TreatNotesTab({ petId, treatNotes, onRefresh }: Props) {
               <img src={form.photo_url} alt="" style={{ marginTop: 8, width: 48, height: 48, objectFit: 'cover', borderRadius: 4 }} />
             )}
           </div>
+          {submitError && <p className="error-text">{submitError}</p>}
           <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <button type="submit">{editingId ? t('common.save_changes') : t('common.save')}</button>
+            <button type="submit" disabled={isSubmitting}>{editingId ? t('common.save_changes') : t('common.save')}</button>
             {editingId && (
               <button type="button" className="button-secondary" onClick={cancelEdit}>{t('common.cancel')}</button>
             )}
@@ -114,7 +125,9 @@ export function TreatNotesTab({ petId, treatNotes, onRefresh }: Props) {
             </div>
             <div style={{ display: 'flex', gap: '0.5rem' }}>
               <button className="button-secondary" onClick={() => startEdit(n)}>{t('common.edit')}</button>
-              <button className="button-secondary" onClick={() => deleteTreatNote(n.id).then(onRefresh)}>{t('common.delete')}</button>
+              <button className="button-secondary" onClick={async () => {
+                try { await deleteTreatNote(n.id); onRefresh() } catch { /* silently ignore UI — user can retry */ }
+              }}>{t('common.delete')}</button>
             </div>
           </li>
         ))}

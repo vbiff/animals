@@ -17,6 +17,8 @@ export function SymptomsTab({ petId, symptoms, medications, onRefresh }: Props) 
   const [showForm, setShowForm] = useState(false)
   const [form, setForm] = useState(emptyForm)
   const [editingId, setEditingId] = useState<string | null>(null)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   function set(k: keyof typeof emptyForm) {
     return (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
@@ -35,14 +37,22 @@ export function SymptomsTab({ petId, symptoms, medications, onRefresh }: Props) 
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    const payload = { title: form.title, date: form.date, end_date: form.end_date || null, description: form.description }
-    if (editingId) {
-      await updateSymptom(editingId, payload)
-    } else {
-      await addSymptom(petId, payload)
+    setSubmitError(null)
+    setIsSubmitting(true)
+    try {
+      const payload = { title: form.title, date: form.date, end_date: form.end_date || null, description: form.description }
+      if (editingId) {
+        await updateSymptom(editingId, payload)
+      } else {
+        await addSymptom(petId, payload)
+      }
+      setForm(emptyForm); setEditingId(null); setShowForm(false)
+      onRefresh()
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : 'Error')
+    } finally {
+      setIsSubmitting(false)
     }
-    setForm(emptyForm); setEditingId(null); setShowForm(false)
-    onRefresh()
   }
 
   function linkedMeds(symptomId: string) {
@@ -52,7 +62,7 @@ export function SymptomsTab({ petId, symptoms, medications, onRefresh }: Props) 
   return (
     <div className="record-panel">
       <button onClick={() => { if (editingId) { cancelEdit() } else { setShowForm(v => !v) } }}>
-        {t('symptom.add')}
+        {editingId ? t('common.cancel') : t('symptom.add')}
       </button>
       {showForm && (
         <form onSubmit={handleSubmit} className="record-form">
@@ -60,8 +70,9 @@ export function SymptomsTab({ petId, symptoms, medications, onRefresh }: Props) 
           <input type="date" value={form.date} onChange={set('date')} required />
           <input type="date" placeholder={t('symptom.end_date')} value={form.end_date} onChange={set('end_date')} />
           <textarea placeholder={t('symptom.description')} value={form.description} onChange={set('description')} rows={3} />
+          {submitError && <p className="error-text">{submitError}</p>}
           <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <button type="submit">{editingId ? t('common.save_changes') : t('common.save')}</button>
+            <button type="submit" disabled={isSubmitting}>{editingId ? t('common.save_changes') : t('common.save')}</button>
             {editingId && (
               <button type="button" className="button-secondary" onClick={cancelEdit}>{t('common.cancel')}</button>
             )}
@@ -90,7 +101,9 @@ export function SymptomsTab({ petId, symptoms, medications, onRefresh }: Props) 
               </div>
               <div style={{ display: 'flex', gap: '0.5rem' }}>
                 <button className="button-secondary" onClick={() => startEdit(s)}>{t('common.edit')}</button>
-                <button className="button-secondary" onClick={() => deleteRecord('symptoms', s.id).then(onRefresh)}>{t('common.delete')}</button>
+                <button className="button-secondary" onClick={async () => {
+                  try { await deleteRecord('symptoms', s.id); onRefresh() } catch { /* silently ignore UI — user can retry */ }
+                }}>{t('common.delete')}</button>
               </div>
             </li>
           )

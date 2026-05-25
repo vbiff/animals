@@ -54,9 +54,9 @@ export function CalendarTab({ symptoms }: Props) {
   return (
     <div className="record-panel">
       <div className="calendar-nav">
-        <button className="button-secondary" onClick={prevMonth}>←</button>
+        <button className="button-secondary" aria-label="Previous month" onClick={prevMonth}>←</button>
         <strong>{monthLabel}</strong>
-        <button className="button-secondary" onClick={nextMonth}>→</button>
+        <button className="button-secondary" aria-label="Next month" onClick={nextMonth}>→</button>
       </div>
       <div className="calendar-grid">
         {dowLabels.map(d => <div key={d} className="calendar-dow">{d}</div>)}

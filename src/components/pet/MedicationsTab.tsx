@@ -18,6 +18,8 @@ export function MedicationsTab({ petId, medications, symptoms, onRefresh }: Prop
   const [showForm, setShowForm] = useState(false)
   const [form, setForm] = useState(emptyForm)
   const [editingId, setEditingId] = useState<string | null>(null)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [photoFile, setPhotoFile] = useState<File | null>(null)
 
   const set = (k: keyof typeof emptyForm) =>
@@ -45,26 +47,34 @@ export function MedicationsTab({ petId, medications, symptoms, onRefresh }: Prop
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    let photoUrl: string | null = form.photo_url || null
-    if (photoFile) {
-      photoUrl = await uploadFile(petId, 'medications', photoFile)
+    setSubmitError(null)
+    setIsSubmitting(true)
+    try {
+      let photoUrl: string | null = form.photo_url || null
+      if (photoFile) {
+        photoUrl = await uploadFile(petId, 'medications', photoFile)
+      }
+      const payload = {
+        name: form.name,
+        dosage: form.dosage,
+        frequency: form.frequency,
+        start_date: form.start_date,
+        end_date: form.end_date || null,
+        symptom_id: form.symptom_id || null,
+        photo_url: photoUrl,
+      }
+      if (editingId) {
+        await updateMedication(editingId, payload)
+      } else {
+        await addMedication(petId, payload)
+      }
+      setForm(emptyForm); setEditingId(null); setPhotoFile(null); setShowForm(false)
+      onRefresh()
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : 'Error')
+    } finally {
+      setIsSubmitting(false)
     }
-    const payload = {
-      name: form.name,
-      dosage: form.dosage,
-      frequency: form.frequency,
-      start_date: form.start_date,
-      end_date: form.end_date || null,
-      symptom_id: form.symptom_id || null,
-      photo_url: photoUrl,
-    }
-    if (editingId) {
-      await updateMedication(editingId, payload)
-    } else {
-      await addMedication(petId, payload)
-    }
-    setForm(emptyForm); setEditingId(null); setPhotoFile(null); setShowForm(false)
-    onRefresh()
   }
 
   function linkedSymptom(m: Medication) {
@@ -74,7 +84,7 @@ export function MedicationsTab({ petId, medications, symptoms, onRefresh }: Prop
   return (
     <div className="record-panel">
       <button onClick={() => { if (editingId) { cancelEdit() } else { setShowForm(v => !v) } }}>
-        {t('medication.add')}
+        {editingId ? t('common.cancel') : t('medication.add')}
       </button>
       {showForm && (
         <form onSubmit={handleSubmit} className="record-form">
@@ -98,8 +108,9 @@ export function MedicationsTab({ petId, medications, symptoms, onRefresh }: Prop
               <img src={form.photo_url} alt="" style={{ marginTop: 8, width: 48, height: 48, objectFit: 'cover', borderRadius: 4 }} />
             )}
           </div>
+          {submitError && <p className="error-text">{submitError}</p>}
           <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <button type="submit">{editingId ? t('common.save_changes') : t('common.save')}</button>
+            <button type="submit" disabled={isSubmitting}>{editingId ? t('common.save_changes') : t('common.save')}</button>
             {editingId && (
               <button type="button" className="button-secondary" onClick={cancelEdit}>{t('common.cancel')}</button>
             )}
@@ -125,7 +136,9 @@ export function MedicationsTab({ petId, medications, symptoms, onRefresh }: Prop
               </div>
               <div style={{ display: 'flex', gap: '0.5rem' }}>
                 <button className="button-secondary" onClick={() => startEdit(m)}>{t('common.edit')}</button>
-                <button className="button-secondary" onClick={() => deleteRecord('medications', m.id).then(onRefresh)}>{t('common.delete')}</button>
+                <button className="button-secondary" onClick={async () => {
+                  try { await deleteRecord('medications', m.id); onRefresh() } catch { /* silently ignore UI — user can retry */ }
+                }}>{t('common.delete')}</button>
               </div>
             </li>
           )
