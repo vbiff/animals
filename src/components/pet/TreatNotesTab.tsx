@@ -10,12 +10,12 @@ interface Props {
   onRefresh: () => void
 }
 
-const emptyForm = { name: '', liked: true, where_bought: '', date: '' }
+const emptyForm = { name: '', liked: true, where_bought: '', date: '', photo_url: '' }
 
 export function TreatNotesTab({ petId, treatNotes, onRefresh }: Props) {
   const { t } = useTranslation()
   const [showForm, setShowForm] = useState(false)
-  const [form, setForm] = useState<{ name: string; liked: boolean; where_bought: string; date: string }>(emptyForm)
+  const [form, setForm] = useState<{ name: string; liked: boolean; where_bought: string; date: string; photo_url: string }>(emptyForm)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [photoFile, setPhotoFile] = useState<File | null>(null)
 
@@ -24,7 +24,7 @@ export function TreatNotesTab({ petId, treatNotes, onRefresh }: Props) {
   }
 
   function startEdit(n: TreatNote) {
-    setForm({ name: n.name, liked: n.liked, where_bought: n.where_bought ?? '', date: n.date })
+    setForm({ name: n.name, liked: n.liked, where_bought: n.where_bought ?? '', date: n.date, photo_url: n.photo_url ?? '' })
     setEditingId(n.id)
     setPhotoFile(null)
     setShowForm(true)
@@ -36,12 +36,9 @@ export function TreatNotesTab({ petId, treatNotes, onRefresh }: Props) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    const existingPhotoUrl = editingId
-      ? (treatNotes.find(n => n.id === editingId)?.photo_url ?? null)
-      : null
     const photoUrl = photoFile
       ? await uploadFile(petId, 'treats', photoFile)
-      : existingPhotoUrl
+      : form.photo_url || null
     const payload = {
       name: form.name,
       liked: form.liked,
@@ -89,6 +86,9 @@ export function TreatNotesTab({ petId, treatNotes, onRefresh }: Props) {
               {t('treat.photo')}
             </label>
             <input type="file" accept="image/*" onChange={e => setPhotoFile(e.target.files?.[0] ?? null)} />
+            {form.photo_url && !photoFile && (
+              <img src={form.photo_url} alt="" style={{ marginTop: 8, width: 48, height: 48, objectFit: 'cover', borderRadius: 4 }} />
+            )}
           </div>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
             <button type="submit">{editingId ? t('common.save_changes') : t('common.save')}</button>
