@@ -340,3 +340,93 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Calendar */
+
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-line);
+  text-transform: uppercase;
+  font-size: var(--text-size-sm);
+  letter-spacing: var(--text-tracking-wide);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-top: 12px;
+}
+
+.calendar-dow {
+  padding: 6px 0;
+  text-align: center;
+  font-size: var(--text-size-xs);
+  color: var(--color-ink-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--text-tracking-wide);
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-size-sm);
+  color: var(--color-ink-muted);
+  position: relative;
+}
+
+.calendar-day.has-symptom {
+  color: var(--color-ink);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.calendar-day.has-symptom::after {
+  content: "";
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-ink);
+}
+
+.calendar-day.is-selected {
+  background: var(--bg-surface-muted);
+  outline: 1px solid var(--color-line);
+}
+
+/* Linked medications in symptom cards */
+
+.linked-meds {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--color-line);
+}
+
+.linked-meds small {
+  color: var(--color-ink-muted);
+  font-size: var(--text-size-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--text-tracking-wide);
+}
+
+.linked-meds ul {
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 4px;
+}
+
+.linked-meds li {
+  font-size: var(--text-size-sm);
+}
