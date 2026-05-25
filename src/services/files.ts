@@ -1,6 +1,6 @@
 import { supabase } from './supabase'
 
-export async function uploadFile(petId: string, folder: 'documents' | 'vaccines' | 'photos', file: File): Promise<string> {
+export async function uploadFile(petId: string, folder: 'documents' | 'vaccines' | 'photos' | 'medications' | 'treats', file: File): Promise<string> {
   const ext = file.name.split('.').pop()
   const path = `${petId}/${folder}/${crypto.randomUUID()}.${ext}`
 

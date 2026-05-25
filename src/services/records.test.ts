@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { getRecords, addVaccine } from './records'
+import { getRecords, addVaccine, updateSymptom, updateMedication } from './records'
 
 vi.mock('./supabase', () => ({
   supabase: { auth: { getSession: vi.fn() }, from: vi.fn() },
@@ -33,5 +33,33 @@ describe('addVaccine', () => {
       name: 'Rabies',
       added_by: expect.objectContaining({ type: 'owner', user_id: 'u1' }),
     }))
+  })
+})
+
+describe('updateSymptom', () => {
+  it('updates symptom fields by id', async () => {
+    const chain = { update: vi.fn().mockReturnThis(), eq: vi.fn().mockResolvedValue({ error: null }) }
+    vi.mocked(supabase.from).mockReturnValue(chain as never)
+    await updateSymptom('s-1', { title: 'Cough', end_date: '2024-02-01' })
+    expect(supabase.from).toHaveBeenCalledWith('symptoms')
+    expect(chain.update).toHaveBeenCalledWith({ title: 'Cough', end_date: '2024-02-01' })
+    expect(chain.eq).toHaveBeenCalledWith('id', 's-1')
+  })
+
+  it('throws when supabase returns error', async () => {
+    const chain = { update: vi.fn().mockReturnThis(), eq: vi.fn().mockResolvedValue({ error: { message: 'fail' } }) }
+    vi.mocked(supabase.from).mockReturnValue(chain as never)
+    await expect(updateSymptom('s-1', { title: 'X' })).rejects.toThrow('fail')
+  })
+})
+
+describe('updateMedication', () => {
+  it('updates medication fields by id', async () => {
+    const chain = { update: vi.fn().mockReturnThis(), eq: vi.fn().mockResolvedValue({ error: null }) }
+    vi.mocked(supabase.from).mockReturnValue(chain as never)
+    await updateMedication('m-1', { name: 'Ibuprofen', symptom_id: 's-1' })
+    expect(supabase.from).toHaveBeenCalledWith('medications')
+    expect(chain.update).toHaveBeenCalledWith({ name: 'Ibuprofen', symptom_id: 's-1' })
+    expect(chain.eq).toHaveBeenCalledWith('id', 'm-1')
   })
 })
