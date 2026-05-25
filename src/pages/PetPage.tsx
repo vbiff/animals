@@ -28,13 +28,14 @@ export function PetPage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { pet, loading, error } = usePet(id!)
-  const { records, refresh } = useRecords(id!)
+  const { records, error: recordsError, refresh } = useRecords(id!)
   const [tab, setTab] = useState<TabId>('vaccines')
   const [showVetModal, setShowVetModal] = useState(false)
   const [showInviteModal, setShowInviteModal] = useState(false)
 
   if (loading) return <div className="loading-state">{t('common.loading')}</div>
   if (error || !pet) { navigate('/dashboard'); return null }
+  if (recordsError) return <div className="loading-state">{t('common.error')}</div>
 
   const tabs: TabId[] = ['vaccines', 'symptoms', 'medications', 'documents', 'calendar', 'notes']
 
